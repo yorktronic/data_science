@@ -1,3 +1,8 @@
+# Calculates the population of all land under 90 meters elevation by continent as of 2010 data. Also calculates the population density of each continent in 2010.
+
+# The script can also write this data to a file: that code is commented out at the bottom of the script.
+
+
 import collections
 population_dict = collections.defaultdict(int)
 land_area = collections.defaultdict(int)

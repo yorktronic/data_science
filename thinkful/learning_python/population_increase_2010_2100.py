@@ -1,7 +1,9 @@
 # Determine the population increase in the low elevation zones of each country from the year 2010 to the year 2100
 
 # Input = population data file
-# Output = dict with the country and the percentage population increase from year 2010 to 2100
+# Output = two dictionaries, one with the population differences in numbers, and the other by percentage. 
+
+# Update this to output a single disct that has a tuple of (percentage, number) for the population change
 
 import collections
 population_2010 = collections.defaultdict(int)
