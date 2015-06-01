@@ -21,17 +21,45 @@ con = lite.connect('../db/challenge.db')
 # Create the cursor object
 cur = con.cursor()
 
+month = raw_input("Which month would you like to search for? ")
+
 with con:
+	# Drop the two tables if they exist
 	cur.execute("DROP TABLE IF EXISTS cities")
 	cur.execute("DROP TABLE IF EXISTS weather")
-	cur.execute("CREATE TABLE cities (name text. state text)")
-	cur.execute("CREATE TABLE weather (city text, year int, warm_month text, cold_month text, average_high int")
+
+	# Create the tables' schemas
+	cur.execute("CREATE TABLE cities (name text, state text)")
+	cur.execute("CREATE TABLE weather (city text, year integer, warm_month text, cold_month text, average_high integer)")
+
+	# Add all the values in the cities and weather tuples above into the tables
 	cur.executemany("INSERT INTO cities VALUES(?,?)", cities)
 	cur.executemany("INSERT INTO weather VALUES(?,?,?,?,?)", weather)
+
+	# Create a query string that will only select cities w/ the warmest month of the user-supplied month	
+	query = "SELECT city, state from weather inner join cities on name = city group by state having warm_month = (?)"
+
+	# Execute the query
+	cur.execute(query, (month,))
 	
+	# Store the resulting rows and columns
+	rows = cur.fetchall()
+	cols = [desc[0] for desc in cur.description]
 
+	# Place the data in a DataFrame
+	df = pd.DataFrame(rows, columns = cols)
 
-
+	row_iterator = df.iterrows()
+	last = row_iterator.next()
 	
+	ans = "The cities in which month is the warmest month are:"
+	
+	# Iterate through the dataframe adding the resulting City, Month pairs to the ans string. When it reaches the last entry, it appends an "and" to make it gramatically correct
+	for i, row in row_iterator:
+		if i == len(df.index) - 1:
+			ans += " and {0}, {1},".format(row['city'], row['state'])
+		else:
+			ans += " {0}, {1},".format(row['city'], row['state'])
 
-
+	# Print the ans, removing the trailing comma and replacing it w/ a period
+	print ans[:-1] + "."
