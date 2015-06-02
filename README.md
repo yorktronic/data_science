@@ -1,4 +1,4 @@
-# data_science #
+# Data Science! #
 
 ## Let's learn some data science ##
 
