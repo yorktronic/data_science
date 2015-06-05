@@ -13,7 +13,7 @@ The Box Plot reveals that the median of the two data sets is the same, at roughl
 ### Histogram ###
 First off, I can't figure out how to truncate the values on the x-axis of the histogram. The x-axis is broken up in to $5,000 increments, and each divider is indicated by the vertical dotted lines. I also need to clean the data some more as it shouldn't be showing negative values on the x-axis. The plot is accurate, it's just showing -5000 on the x-axis for some reason.
 
-The histogram does a better job of showing the volume of loans, both requested and funded, within each dollar value range for both requested and. looking at just after the middle of the range for amount requested, you can see that $10,000 to $20,000 is the sort of sweet spot for what Lending Club likes to offer. Looking at the volume of requested loans in the $15,000 - $35,000 range, it stands to reason that many of these loan requests received a dollar value less than the individual wanted. 
+The histogram does a better job of showing the volume of loans, both requested and funded, within each dollar value range for both requested. Looking just after the middle of the range for amount requested, you can see that $10,000 to $20,000 is the sort of sweet spot for what Lending Club likes to offer. Looking at the volume of requested loans in the $15,000 - $35,000 range, it stands to reason that many of these loan requests received a dollar value less than the individual wanted. 
 
 ### Probability Plot ###
 The data doesn't fit the normal distribution, with an R^2 value of only 93%
