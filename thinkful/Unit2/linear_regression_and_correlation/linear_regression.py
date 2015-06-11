@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # Import the Lending Club dataset
 #
@@ -6,7 +7,7 @@ loansData = pd.read_csv('https://spark-public.s3.amazonaws.com/dataanalysis/loan
 
 # Remove any empty cells in the data set
 #
-loansData.dromna(inplace=True)
+loansData.dropna(inplace=True)
 
 # Create a new set of interest rates, removing the % from the interest rate and and converting it into a 4-digit decimal
 #
@@ -21,3 +22,10 @@ cleanFICO = loansData['FICO.Range'].map(lambda x: int(x.split('-')[0]))
 
 loansData['FICO.Score'] = cleanFICO
 loansData['Clean.Interest.Rate'] = cleanRate
+
+
+#plt.figure()
+loansData.hist(column='FICO.Score')
+plt.xlabel('FICO Score')
+plt.ylabel('Count')
+plt.show()
