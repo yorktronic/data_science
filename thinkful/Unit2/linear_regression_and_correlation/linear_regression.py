@@ -29,3 +29,5 @@ loansData.hist(column='FICO.Score')
 plt.xlabel('FICO Score')
 plt.ylabel('Count')
 plt.show()
+
+scat = pd.scatter_matrix(loansData, alpha=0.05, figsize=(10,10))
