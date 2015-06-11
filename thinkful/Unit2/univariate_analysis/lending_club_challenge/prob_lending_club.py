@@ -16,7 +16,6 @@ data.boxplot()
 plt.savefig('./plots/boxplot_amt_requested_v_funded.png')
 plt.clf()
 
-
 data.hist()
 plt.savefig('./plots/histogram_amt_requested_v_funded.png')
 plt.clf()
@@ -25,3 +24,15 @@ plt.clf()
 stats.probplot(loansData['Amount.Funded.By.Investors'], dist = "norm", plot = plt)
 plt.savefig('./plots/amt_funded_by_investors_v_normal_distribution.png')
 plt.clf()
+
+'''
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as pyplot
+...
+fig = pyplot.figure()
+ax = fig.add_subplot(1,1,1,)
+n, bins, patches = ax.hist(measurements, bins=50, range=(graph_minimum, graph_maximum), histtype='bar')
+ax.set_xticklabels([n], rotation='vertical')
+'''
+# Link to help me figure out how to rotate the x-axis titles http://matplotlib.1069221.n5.nabble.com/X-ticklabels-not-working-in-histogram-td12430.html
