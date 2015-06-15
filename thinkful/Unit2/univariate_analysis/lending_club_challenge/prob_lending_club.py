@@ -11,7 +11,7 @@ loansData.dropna(inplace = True)
 data = loansData[['Amount.Requested', 'Amount.Funded.By.Investors']]
 
 # Rather than just plotting the Amount Requested by itself, I created a boxplot and a histogram with both Amount Requested and Amount Funded by Investors on the same plot
-plt.figure()
+
 data.boxplot()
 plt.savefig('./plots/boxplot_amt_requested_v_funded.png')
 plt.clf()

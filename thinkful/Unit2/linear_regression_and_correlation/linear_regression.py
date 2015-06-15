@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 # Import the Lending Club dataset
 #
@@ -23,11 +24,21 @@ cleanFICO = loansData['FICO.Range'].map(lambda x: int(x.split('-')[0]))
 loansData['FICO.Score'] = cleanFICO
 loansData['Clean.Interest.Rate'] = cleanRate
 
-
+# Create the histogram
+#
 #plt.figure()
 loansData.hist(column='FICO.Score')
-plt.xlabel('FICO Score')
-plt.ylabel('Count')
-plt.show()
 
-scat = pd.scatter_matrix(loansData, alpha=0.05, figsize=(10,10))
+# Tweak the spacing to prevent clipping of tick-labels
+#
+plt.subplots_adjust(bottom=0.15)
+
+# Show the histogram
+# 
+plt.show()
+plt.clf()
+
+# Note - if we had wanted to rotate the x-axis labels, we could've used: plt.xticks(rotation='vertical')
+
+scat = pd.scatter_matrix(loansData, alpha=0.05, figsize=(10,10), diagonal='hist')
+plt.show()
