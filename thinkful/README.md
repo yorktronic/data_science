@@ -12,3 +12,5 @@ Please keep in mind that some of the .py files contined in this area were not cr
 ## Unit 2 - Analyzing Data ##
 * Probability and Statistics
 * Univariate Analysis
+* Linear Regression
+* Logistic Regression
