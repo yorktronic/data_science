@@ -1,5 +1,5 @@
 # Logistic Regression #
-This is where I think things get particularly interesting. Logistic regression was developed by statistician D.R. Cox in 1958. If you really want to nerd out, you can read all about it on <a href="https://en.wikipedia.org/wiki/Logistic_regression">Wikipedia</a>/. 
+This is where I think things get particularly interesting. Logistic regression was developed by statistician D.R. Cox in 1958, and it's main purpose is to answer binary questions. If you really want to nerd out, you can read all about it on <a href="https://en.wikipedia.org/wiki/Logistic_regression">Wikipedia</a>. 
 
 Basically, where linear regression tells you how related some variables are to some outcome (this is called correlaton, and remember, <a href="https://xkcd.com/552/">correlation does not imply causation!</a>), logistic regression asks questions that have binary answers? For example: based off of Lending Club's loan data, will I be able to get a $10,000 loan at or less than 12% interest with a FICO score of 700? Another example: will it rain tomorrow if I live in California?
 
