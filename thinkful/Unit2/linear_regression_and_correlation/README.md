@@ -1,4 +1,4 @@
-# Back to School - Linear Regression #
+# Linear Regression #
 
 TL:DR - the interest rate you get on a loan is directly related to the loan term and your FICO Score. duh.
 
