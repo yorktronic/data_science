@@ -13,7 +13,7 @@ Pull in the data, clean it, then perform (1) and (2) and analyze the model fit s
 Unless I'm missing something, it seems as though annual income and home ownership, both together and independently, have little to no influence on the interest rate that is offered to a lendee, which is actually pretty surprising. I knew that FICO was king in terms of determining one's credit-worthiness, but I thought that home ownership and income would have some bearing.
 
 ### Test Result - Interest Rate Influenced by Annual Income ###
-`
+```
                             OLS Regression Results
 ==============================================================================
 Dep. Variable:               int_rate   **R-squared:                       0.011
@@ -41,9 +41,9 @@ Warnings:
 [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
 [2] The condition number is large, 1.54e+05. This might indicate that there are
 strong multicollinearity or other numerical problems.
-`
+```
 ### Test Result - Interest Rate Influenced by Annual Income AND Home Ownership ###
-`
+```
 Results from the multivariate analysis of whether and how interest rate is 
 influenced by annual income AND home ownership
 
@@ -75,4 +75,4 @@ Warnings:
 [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
 [2] The condition number is large, 2.04e+05. This might indicate that there are
 strong multicollinearity or other numerical problems.
-`
+```
