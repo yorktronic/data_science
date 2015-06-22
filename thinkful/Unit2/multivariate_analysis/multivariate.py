@@ -31,9 +31,11 @@ loansData['int_rate'] = cleanRate
 # Convert home_ownership to a categorical variable
 loansData['home_ownership_int'] = pd.Categorical(loansData.home_ownership).codes
 
-# Create the right side of the model
-#X = loansData[['annual_inc', 'home_ownership_int']]
-X = np.column_stack([loansData['annual_inc'], loansData['home_ownership_int']])
+# Create the right side of the model - different tests are commented out
+#X = loansData['annual_inc']
+#X = loansData['home_ownership_int']
+X = loansData[['annual_inc', 'home_ownership_int']]
+#X = np.column_stack([loansData['annual_inc'], loansData['home_ownership_int']])
 
 #fit a OLS model
 X = sm.add_constant(X)
