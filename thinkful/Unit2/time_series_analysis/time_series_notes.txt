@@ -1,0 +1,128 @@
+#################
+These are my notes from Jason Delaney's lectures on time series: https://www.youtube.com/watch?v=F3Kjdz4K7vE
+#################
+#
+Time series - dependent variable that we observe on a regular basis vs. cross-section @ all time, lots of different units of variation
+
+horizontal pattern - data seems to fluctuate around a mean
+trend pattern - random fluctuation but it's over a constant trend
+seasonal pattern - repeating pattern over successive periods
+cyclical pattern - high runs and low runs
+
+patterns can be a combination of these
+
+A series of Y's influenced by: 
+t - time
+seasonality - short term periodic relationship between Y and t
+cycles - long term periodic relationship
+irregular relationship - unobservable time-dependent influences (error)
+
+Not looking @ causal relationships
+
+Forecasting Methods
+Forecasting Accuracy
+Forecast error - actual value minus forecast (for purpose of instruction)
+
+Lesson 2
+
+Naive Forecast - whatever happened last period will happen this period
+-----------------
+Ft+1 = Yt
+
+mean absolute error (MAE) = sum of the absolute value of the forecast errors / the number of forecasts
+
+mean square error (MSE) = sum of (Yt - Ft)^2 / # of forecasts
+
+percentage error = (Yt - Ft) / Yt
+
+abs
+
+mean absolute percentage error (MAPE)= sum of abs (from above) divided by # of forecasts
+
+average of past values = sum of past observed values / number of observed values
+does a pretty good job of data that sticks around a trend / average 
+-----------------------
+MAE
+MSE
+MAPE
+
+Lesson 3
+
+Smoothing Methods
+If we can't predict the noise in the future, we lean on Smoothing Methods to help us predict the future. Also not great if we have a trend.
+
+Moving Average - uses most recent k data values 
+MA(3) = most recent 3 values / 3
+
+Smoothed Series
+Smoothed observations using the moving average approach
+L3 4:20
+Yt-k+1
+
+Centered Moving Average
+St = (Yt-2 + Yt-1 + Yt + Yt+1 + Yt+2) / 5
+
+Weighted moving average
+Previous 3 observations
+Ft+1 = (1/6)Yt-2 + (2/6)Yt-1 + (3/6)Yt
+
+5-period (triangle weighted)
+St = (1/9)Yt-2 + (2/9)Yt-1 + (3/9)Yt + (2/9)Yt+1 ....
+
+4-period CMA
+L3 12:35
+use n+1 data points and weight the tails at half
+
+Exponential Smoothing
+F2 = Y1
+Ft = alpha * Yt + (1-alpha) * Ft
+0 < alpha < 1
+alpha is our smoothing parameter. you choose alpha to minimize your forecast error
+
+Lesson 4 
+
+Using regression techniques with time as your xn
+Linear trend (duh)
+
+Quadratic Trend
+y = B0 + B1t + B2t^2 + E
+B1 > 0 increasing: B2 > 0 @ increasing rate, B2 < 0 @ decreasing rate
+B1 < 0 decreasing: B2 > 0 @ decreasing rate, B2 < 0 @ increasing rate
+
+Exponential Trend
+Yt = B0 + B1^t + E -> has to be transformed in order to be plugged in to a regression model. Take the log of both sides
+
+ln yt = ln (b0 + B1^t + E)
+ln yt = lnB0 + lnB1^t + lnE
+
+# since ln a^b = b * ln a we can further transform the above equation to
+
+ln yt = lnB0 + t*ln b1 + ln E
+
+ysquiggle = ln y 
+B0 squggle = ln B0
+etc
+
+B1 as a percentage change per period
+
+The assumption is that E (error) is independent. With seasons, we have correlated residuals (and maybe errors). 
+
+Dummy variable approach to estimating trends with seasons. Dummy = 1 if something is true and 0 otherwise
+
+Example: Quarterly data
+w/ k seasons you define k-1 dummies
+k = 4
+3 dummies
+
+d_Quarter1 = 1 if Qtr = 1, 0 otherwise
+d_Quarter2 = 1 if Qtr = 2, 0 otherwise
+d_Quarter3 = 1 if.........
+Don't have a quarter 4 because then you'd have a collinearity problem
+
+New Model
+Yt = B0 + B1(D_Qtr1) + B2(d_Qtr2) + B3(d_Qtr3) + B4t + E
+
+
+
+
+
