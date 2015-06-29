@@ -41,3 +41,9 @@ X = loansData[['annual_inc', 'home_ownership_int']]
 X = sm.add_constant(X)
 model = sm.OLS(loansData['int_rate'], X)
 
+# use annual_inc to model interest rates (int_rate)
+# mod = ols(formula='int_rate ~ annual_inc', data=df)
+# res = mod.fit()
+# from statsmodels.formula.api import ols
+# mod2 = ols(formula='int_rate ~ annual_inc + C(home_ownership)', data=df).fit()
+# mod2.summary()

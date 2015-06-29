@@ -1,0 +1,5 @@
+# Time Series Modeling #
+Well, this section was hard, and I'm still working on understanding all the concepts that were introduced. My task was to take Lending Club data for all of 2014 and perform an analysis on the number of loans per month. Specifically, I am to answer the questions: 
+
+1. **Is the time series of loans per month stationary?** Answer: yes, the time series is stationary. Though there is autocorrelation across all lags, it diminishes after month 5 or so and becomes relatively steady. If the series were non-stationary, it would needed to be differenced. I will crete an additional plot of the variace across all the months to verify this answer. 
+2. **There are significant autocorrelated structures at month 1, 2, and 3. I would likely take a moving average to match the these lags. Additionally, it might be useful (given that I have historical information on previous years), to see if there's a seasonal component at play here. Given that the spikes are in January, March, and April, I'd like to explore whether there is a larger quantity of debt consolidation loans during these months. Since they are just after the holiday season :) 

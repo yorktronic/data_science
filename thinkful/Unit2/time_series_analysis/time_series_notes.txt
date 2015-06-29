@@ -122,6 +122,57 @@ Don't have a quarter 4 because then you'd have a collinearity problem
 New Model
 Yt = B0 + B1(D_Qtr1) + B2(d_Qtr2) + B3(d_Qtr3) + B4t + E
 
+slopes of the lines are always the same when you draw the data on a 2-axis graph
+
+Lesson 5
+Additive Decomposition Model 
+yt = trendt + seasont + irregulart
+
+In business applications, we often think that seasons lead to percentage changes. Additive decomposition models don't handle this, so we need...
+
+Multiplicative Decomposition Model
+yt = trendt * seasonalt * irregulart
+irregulart = scaling error
+
+In order to perform trend estimation and forecasting - we need to identify and isolate the seasonal effect. 
+
+De-seasonalize the data:
+1) What is our seasonal period?
+	Quarters (4 periods)? Months (12 periods)?
+
+2) Develop a moving average forecast (MAF)
+	# of periods from 1
+	smoothing: you can use a centered moving average
+	forecasting: use a regular moving average
+	e.g. monthly data w/ annual trends
+	12-MA for month 13, 14, 15, etc - this smooths seasonal effects
+
+3) Find the ratio of each observation to the MA forecast
+	rt = Yt / St
+	i.e. how many percent of our forecast was our observation?
+
+4) Find the average of the ratios for each month, season, or periodic unit
+e.g. r13: January, r25:January, r37:January
+if there are k periods: you have k average ratios
+*unadjusted seasonal indexes*
+
+5) Adjust these
+	Divide each k ratios by the average of the k ratios
+	This sets the average index to 1 (we a want to on average be multiplying our numbers by 1)
+	*Adjusted seasonal indexes*
+
+6) Adjust the series
+	For each observation, we divide the observation by its adjusted seasonal index
+	sprimet = Yt / index for season of t
+	This yeilds a seasonally adjusted series
+	St = Trendt * irregulart
+	Ysquigglet = Yt / season
+	Ysquigglet = B0 + B1t + E
+	Trend for period T ~ Tt = b0 + b1t
+
+	See all this shit explained @ 20:00 through Lecture 5 https://www.youtube.com/watch?v=QrEKlHWakoE
+
+
 
 
 
