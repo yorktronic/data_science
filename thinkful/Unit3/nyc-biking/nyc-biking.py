@@ -1,53 +1,13 @@
-
-# coding: utf-8
-
-# In[4]:
+####################################
+#
+# This script pulls in data from the NYC CitiBike program to analyze the number of available bikes throughout the city every minute for one hour
+# It updates an existing SQL database containing tables created in OTHER SCRIPT
+#
+####################################
 
 import requests
 
-
-# In[5]:
-
 r = requests.get('http://www.citibikenyc.com/stations/json')
-
-
-# In[6]:
-
-type(r)
-
-
-# In[7]:
-
-
-
-
-# In[66]:
-
-# r.text
-
-
-# In[67]:
-
-# r.json()
-
-
-# In[10]:
-
-r.json().keys()
-
-
-# In[11]:
-
-r.json()['executionTime']
-
-
-# In[12]:
-
-# Number of citi bike stations
-len(r.json()['stationBeanList'])
-
-
-# In[13]:
 
 # Create a list of all keys in stationBeanList
 key_list = []
@@ -56,253 +16,58 @@ for station in r.json()['stationBeanList']:
         if k not in key_list:
             key_list.append(k)
 
-
-# In[14]:
-
-key_list
-
-
-# In[15]:
-
 # Import the data into a dataframe
 from pandas.io.json import json_normalize
 df = json_normalize(r.json()['stationBeanList'])
 
-
-# In[16]:
-
-df.head()
-
-
-# In[17]:
-
-# Check the range of values, starting with available bikes
-import matplotlib.pyplot as plt
-import pandas as pd
-get_ipython().magic(u'matplotlib inline')
-df['availableBikes'].hist()
-plt.show
-
-
-# In[18]:
-
-df['totalDocks'].hist()
-
-
-# In[19]:
-
-df['availableDocks'].hist()
-
-
-# In[21]:
-
-# Make a plot that shows the percent available of each dock
-avail = df['availableBikes']
-
-
-# In[22]:
-
-total = df['totalDocks']
-
-
-# In[23]:
-
-df2 = avail / total
-
-
-# In[25]:
-
-df2.hist()
-
-
-# In[26]:
-
-df['availableBikes'].max()
-
-
-# Exercises
-
-# In[38]:
-
-# Are there any test stations?
-testStations = []
-for index, row in df.iterrows():
-    if row['testStation'] == True:
-        testStations.append(index)
-
-
-# In[40]:
-
-testStations
-
-
-# In[41]:
-
-# There are no test stations
-
-
-# In[47]:
-
-# How many are in service?
-inService = 0
-for index, row in df.iterrows():
-    if row['statusValue'] == 'In Service':
-        inService += 1
-        
-
-
-# In[48]:
-
-inService
-
-
-# In[50]:
-
-# A better way of doing what I just did
-df.groupby('statusValue').size()
-
-
-# In[51]:
-
-df.groupby('statusKey').size()
-
-
-# In[52]:
-
-# What is statusKey?
-
-
-# In[54]:
-
-# What is the mean number of bikes in a dock?
-df['availableBikes'].mean()
-
-
-# In[55]:
-
-# What is the median?
-df['availableBikes'].median()
-
-
-# In[56]:
-
-# How does this change if we remove the docs that are not in service?
-
-
-# In[58]:
-
-df2 = df[df.statusValue == 'In Service']
-
-
-# In[59]:
-
-df2['availableBikes'].mean()
-
-
-# In[60]:
-
-df2['availableBikes'].median()
-
-
-# In[61]:
-
-len(df2)
-
-
-# In[62]:
-
-len(df)
-
-
-# In[63]:
-
-# A better way to do what I just did
-df[df['statusValue'] == 'In Service']['availableBikes'].median()
-
-
-# In[68]:
-
+# Create a reference table in citi_bike.db that will hold all of the data pertaining to a particular CitiBike station
 import sqlite3 as lite
 con = lite.connect('./db/citi_bike.db')
 cur = con.cursor()
 with con:
     cur.execute('CREATE TABLE citibike_reference (id INT PRIMARY KEY, totalDocks INT, city TEXT, altitude INT, stAddress2 TEXT, longitude NUMERIC, postalCode TEXT, testStation TEXT, stAddress1 TEXT, stationName TEXT, landMark TEXT, latitude NUMERIC, location TEXT )')
 
-
-# In[72]:
-
-#a prepared SQL statement we're going to execute over and over again
+# Create the SQL statement that will be used to insert data into the citibike_reference table in citi_bike.db
 sql = "INSERT INTO citibike_reference (id, totalDocks, city, altitude, stAddress2, longitude, postalCode, testStation, stAddress1, stationName, landMark, latitude, location) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
 
-#for loop to populate values in the database
+# Populate values in the citibike_reference table based on what we pull in from the citibike website
 with con:
     for station in r.json()['stationBeanList']:
         #id, totalDocks, city, altitude, stAddress2, longitude, postalCode, testStation, stAddress1, stationName, landMark, latitude, location)
         cur.execute(sql,(station['id'],station['totalDocks'],station['city'],station['altitude'],station['stAddress2'],station['longitude'],station['postalCode'],station['testStation'],station['stAddress1'],station['stationName'],station['landMark'],station['latitude'],station['location']))
 
-
-# In[73]:
-
-# Extract the column from the DataFrame and put them into a list
+# Extract the 'id' column from the table and create a list that I'll use to create a table where the columns are the station id's
 station_ids = df['id'].tolist()
 
-
-# In[75]:
-
-# add the '_' to the station name and also add the data type for SQLite
+# We can't have integer values as columns, so we add '_' to the station name and also add the data type for when we create the table with these columns in the SQLite db
 station_ids = ('_' + str(x) + ' INT' for x in station_ids)
 
-
-# In[79]:
-
-# create the table
+# Create the table 'available_bikes' with the _station_id's as columns
 with con: 
     cur.execute("CREATE TABLE available_bikes ( execution_time INT, " +  ", ".join(station_ids) + ");")
 
-
-# In[80]:
-
-# a package with datetime objects
+# Package with datetime objects
 import time
 
-# a package for parsing a string into a Python datetime object
+# Package for parsing a string date value into a Python datetime object
 from dateutil.parser import parse
 
-import collections
-
-# take the string and parse it in to a Python datetime object
+# Take the string and parse it in to a Python datetime object, which will be the time at which the data was added to the database
 exec_time = parse(r.json()['executionTime'])
 
-
-# In[104]:
-
+# Since I'm only interested in storing the station data every minute for one hour, the exec_time is a seconds value
 with con:
     cur.execute("INSERT INTO available_bikes (execution_time) VALUES (?)", (exec_time.strftime('%S'),))
 
+# Create a defaultdict to store bikes by station
+id_bikes = collections.defaultdict(int) 
 
-# In[105]:
-
-id_bikes = collections.defaultdict(int) #defaultdict to store bikes by station
-
-# loop through the stations in the station list
+# Loop through the stations in stationBeanList and store the number of avilable bikes per station, by station id
 for station in r.json()['stationBeanList']:
     id_bikes[station['id']] = station['availableBikes']
 
-
-# In[106]:
-
-# iterate through the defaultdict to update the values in the database
+# iterate through the defaultdict to update the values in the available_bikes table
 with con:
     for k, v in id_bikes.iteritems():
         cur.execute("UPDATE available_bikes SET _" + str(k) + " = " + str(v) + " WHERE execution_time = " + exec_time.strftime('%S') + ";")
-
-
-# In[107]:
-
-# Turn this in to a script (requests.get(........)
-
-
-# In[ ]:
-
-
 
