@@ -57,7 +57,10 @@ exec_time = parse(r.json()['executionTime'])
 
 # Since I'm only interested in storing the station data every minute for one hour, the exec_time is a seconds value
 with con:
-    cur.execute("INSERT INTO available_bikes (execution_time) VALUES (?)", (exec_time.strftime('%S'),))
+    cur.execute("INSERT INTO available_bikes (execution_time) VALUES (?)", (exec_time.strftime("{}:{}:{}".format('%H','%M','%S')),))
+
+# Import the collections library 
+import collections 
 
 # Create a defaultdict to store bikes by station
 id_bikes = collections.defaultdict(int) 
