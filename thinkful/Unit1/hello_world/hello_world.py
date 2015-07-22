@@ -1,1 +1,1 @@
-print "Hello World, my name is Ty"
+print "Hello World, my name is Ty, and I'm getting better at learning at GitHub."
