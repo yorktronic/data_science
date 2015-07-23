@@ -12,10 +12,8 @@ There were 77 bicycles coming and going in the hour between 2015-07-22 19:03:45 
 
 This seems to be accurate? I'll run the analysis again during a few more one-hour blocks to see what I come up with. For now, here's a plot of all the stations and their in and out values:
 
-<figure>
-	<img src="https://raw.githubusercontent.com/yorktronic/data_science/master/thinkful/Unit3/nyc-biking/plots/num-bikes-in-and-out-in-one-hour.png">
-	<figcaption>The x-axis is just ID numbers of bike stations. There are 329 in total, not 3000 like you might think from looking at the graph.</figcaption>
-</figure>
+<img src="https://raw.githubusercontent.com/yorktronic/data_science/master/thinkful/Unit3/nyc-biking/plots/num-bikes-in-and-out-in-one-hour.png">
+The x-axis is just ID numbers of bike stations. There are 329 in total, not 3000 like you might think from looking at the graph.
 
 ## How did I do it? ##
 
