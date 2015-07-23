@@ -21,8 +21,11 @@ The x-axis is just ID numbers of bike stations. There are 329 in total, not 3000
 This was part of a tutorial through Thinkful's Data Science course, so I used some of their code that was part of the lesson. I broke the problem up using several scripts so that if I have to do something similar later, and any of this will be reusable, I'll... well, have it for later. The files:
 
 **nyc-biking.py**: creates the SQLite database with the necessary tables
+
 **getAvailableBikes.py**: pulls from the Citi Bikes JSON data and populates the database tables with the information I needed
+
 **60-minutes.py**: runs getAvailableBikes.py once a minute for 60 minutes
+
 **analysis.py**: performs the analysis, which I summarized above.
 
 ## Answers to other questions ##
