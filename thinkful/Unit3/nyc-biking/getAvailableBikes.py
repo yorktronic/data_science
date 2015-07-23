@@ -26,7 +26,7 @@ cur = con.cursor()
 
 # Since I'm only interested in storing the station data every minute for one hour, the exec_time is a seconds value
 with con:
-    cur.execute("INSERT INTO available_bikes (execution_time) VALUES (?)", (exec_time.strftime('%M'),))
+    cur.execute("INSERT INTO available_bikes (execution_time) VALUES (?)", (exec_time.strftime('%s'),))
 
 # Import the collections library 
 import collections 
@@ -41,4 +41,4 @@ for station in r.json()['stationBeanList']:
 # iterate through the defaultdict to update the values in the available_bikes table
 with con:
     for k, v in id_bikes.iteritems():
-        cur.execute("UPDATE available_bikes SET _" + str(k) + " = " + str(v) + " WHERE execution_time = " + exec_time.strftime('%M') + ";")
+        cur.execute("UPDATE available_bikes SET _" + str(k) + " = " + str(v) + " WHERE execution_time = " + exec_time.strftime('%s') + ";")

@@ -7,3 +7,7 @@ Math, statistics,and python oh my! My work here focuses on varying ways to analy
 * <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit2/linear_regression_and_correlation">Linear regression analysis</a> on Lending Club data
 
 * <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit2/logistic_regression">A script</a> that tells you the probability of getting a loan from Lending Club given your FICO Score, the max interest rate you can handle, and the amount of the loan that you want
+
+* <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit2/time_series_analysis">Time series analysis</a> that analyzes loan data over time and answer some fun questions.
+
+* <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit2/markov">Markov models write-up</a>

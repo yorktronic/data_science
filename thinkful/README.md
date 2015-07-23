@@ -14,3 +14,10 @@ Please keep in mind that some of the .py files contined in this area were not cr
 * Univariate Analysis
 * Linear Regression
 * Logistic Regression
+* Multivariate Analysis
+* Time Series Analysis
+* Markov Models
+* Bayesian Probability
+
+## Unit 3 - The projects ##
+* Analysis of how New Yorkers utilize the Citi Bike program in New York City
