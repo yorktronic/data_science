@@ -74,11 +74,10 @@ def getMaxTemps(t):
 	maxTemps = {}
 	
 	for k in cities:
-		latLong = cities[k]
 		
 		# Create the API call string and get the JSON object from forecast.io
 		# API call format: 'https://api.forecast.io/forecast/APIKEY/LATITUDE,LONGITUDE,TIME'
-		apiCall = 'https://api.forecast.io/forecast/{}/{}/'.format(apiKey, (latLong + ',' + str(time)))
+		apiCall = 'https://api.forecast.io/forecast/{}/{}/'.format(apiKey, (cities[k] + ',' + str(time)))
 		r = requests.get(apiCall)
 
 		# Get the max temp on this particular day from the JSON object and add it to the dictionary of max temps
