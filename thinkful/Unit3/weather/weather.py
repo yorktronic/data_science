@@ -81,8 +81,7 @@ def getMaxTemps(t):
 		r = requests.get(apiCall)
 
 		# Get the max temp on this particular day from the JSON object and add it to the dictionary of max temps
-		maxTemp = r.json()['daily']['data'][0]['temperatureMax']
-		maxTemps[k] = maxTemp
+		maxTemps[k] = r.json()['daily']['data'][0]['temperatureMax']
 
 	return maxTemps
 
