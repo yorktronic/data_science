@@ -68,30 +68,20 @@ cur = con.cursor()
 with con:
 	cur.execute(createTable)
 
-maxTemps = {}
-
-# Populate the database 86400 seconds in a day
-for k in cities:
-	latLong = cities[k]
-	# API call format: 'https://api.forecast.io/forecast/APIKEY/LATITUDE,LONGITUDE,TIME'
-	apiCall = 'https://api.forecast.io/forecast/{}/{}/'.format(apiKey, (latLong + ',' + str(time)))
-	r = requests.get(apiCall)
-	maxTemp = r.json()['daily']['data'][0]['temperatureMax']
-
-
-
-
-
-# Loop through the cities dictionary, pulling the required data and adding it to the database
-for k in cities:
-		# Lat and long from each city
-	latLong = cities[k]
+# Function that gets the max temps for the specified time (day) and returns a dict with the city name as the key and the max temp for that city
+def getMaxTemps(t):
 	
-	# API call format: 'https://api.forecast.io/forecast/APIKEY/LATITUDE,LONGITUDE,TIME'
-	apiCall = 'https://api.forecast.io/forecast/{}/{}/'.format(apiKey, (latLong + ',' + str(time)))
+	maxTemps = {}
 	
-	# Get the information from forecast.io
+	for k in cities:
+		latLong = cities[k]
+		
+		# API call format: 'https://api.forecast.io/forecast/APIKEY/LATITUDE,LONGITUDE,TIME'
+		apiCall = 'https://api.forecast.io/forecast/{}/{}/'.format(apiKey, (latLong + ',' + str(time)))
+		r = requests.get(apiCall)
+		maxTemp = r.json()['daily']['data'][0]['temperatureMax']
+		maxTemps[k] = maxTemp
 
+	return maxTemps
 
-
-	r = requests.get(apiCall)
+# Next, create a loop that calls getMaxTemps with a day, then takes the dictionary and uses its contents to update the database...
