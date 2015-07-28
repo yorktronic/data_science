@@ -10,7 +10,7 @@ The most active station was station id <a href="https://www.google.com/maps/plac
 
 There were 77 bicycles coming and going in the hour between 2015-07-22 19:03:45 and 2015-07-22 20:03:13. Below is a graph showing the in and outs for all stations in NYC.
 
-This seems to be accurate? I'll run the analysis again during a few more one-hour blocks to see what I come up with. For now, here's a plot of all the stations and their in and out values:
+I'll run the analysis again during a few more one-hour blocks to see what I come up with, as I imagine the data changes depending on the day of the week and time. For now, here's a plot of all the stations and their in and out values:
 
 <img src="https://raw.githubusercontent.com/yorktronic/data_science/master/thinkful/Unit3/nyc-biking/plots/num-bikes-in-and-out-in-one-hour.png">
 
