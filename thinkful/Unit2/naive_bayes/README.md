@@ -7,4 +7,6 @@ If this doesn't make sense, and it didn't for me even though I studied this crap
 
 <strong>Bayesian inference</strong> introduces prior probability interpreted as prior belief or knowledge, which in turn describe the general probability of encoutering a particular class. 
 
+I'm gonna do more research in this area and hopefully come up with an exercise that uses Bayseian probability.
+
 
