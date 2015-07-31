@@ -53,7 +53,7 @@ sql = "INSERT INTO daily_max_temperature (date, "
 
 # Loop through the cities dictionary to finish the CREATE TABLE and INSERT INTO statements
 for k in cities:
-	createTable += (k + ' TEXT, ')
+	createTable += (k + ' FLOAT, ')
 	sql += (k + ', ')
 
 # Remove the training whitespace and comma from both strings, add a close parenthesis, etc
@@ -66,6 +66,7 @@ sql += ') VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
 con = lite.connect('./db/weather.db')
 cur = con.cursor()
 with con:
+	cur.execute("DROP TABLE IF EXISTS daily_max_temperature")
 	cur.execute(createTable)
 
 # Function that gets the max temps for the specified time (day) and returns a dict with the city name as the key and the max temp for that city
@@ -86,3 +87,19 @@ def getMaxTemps(t):
 	return maxTemps
 
 # Next, create a loop that calls getMaxTemps with a day, then takes the dictionary and uses its contents to update the database...
+
+dayZero = getMaxTemps(startDate)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
