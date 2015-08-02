@@ -90,7 +90,9 @@ def getMaxTemps(t):
 
 dayZero = getMaxTemps(startDate)
 
-
+with con:
+	cur.execute("INSERT INTO daily_max_temperature (date) VALUES (?)", (startDate,))
+	
 
 
 
