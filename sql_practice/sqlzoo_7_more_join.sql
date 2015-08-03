@@ -75,6 +75,36 @@ select movie.yr, count(movie.id)
 	)
 group by movie.yr having count(movie.id) > 2
 
+# Question 13 - List the film title and the leading actor for all of the films 'Julie Andrews' played in
+# Get Julie Andrews' actorid from actor
+# 179
+# Get the movieids and cast members with ord=1 fromc casting
+# Get the title from movie
+select movie.title, actor.name
+	
+	from movie join casting on 
+		movie.id = casting.movieid
+	join actor on 
+		(casting.actorid = actor.id)
+	
+	where ( 
+		(movie.id in (
+			select casting.movieid from casting where casting.actorid = ( 
+				select actor.id from actor where actor.name = 'Julie Andrews')
+			)
+		)
+		and 
+			casting.ord = 1)
+
+# Question 14 - Obtain a list, in alphabetical order, of actors who've had at least 30 starring roles
+select actor.name, count(casting.actorid)
+	from actor join casting on (actor.id = casting.actorid)
+group by actor.name having count(casting.actorid >= 30)
+
+
+
+
+
 
 
 
