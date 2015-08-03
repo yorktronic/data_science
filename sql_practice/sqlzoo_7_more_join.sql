@@ -97,14 +97,20 @@ select movie.title, actor.name
 			casting.ord = 1)
 
 # Question 14 - Obtain a list, in alphabetical order, of actors who've had at least 30 starring roles
-select actor.name, count(casting.actorid)
-	from actor join casting on (actor.id = casting.actorid)
-group by actor.name having count(casting.actorid >= 30)
+select actor.name, count(casting.ord)
 
+	from actor join casting on 
+		(actor.id = casting.actorid) 
+		and
+		casting.ord = 1
+group by actor.name having count(casting.ord) >= 30
 
-
-
-
-
+# Question 15 - List the films released in the year 1978 ordered by the number of actors in the cast. Note: the site says this answer is wrong but I'm pretty sure it's correct.
+select movie.title, count(casting.actorid) 
+	from movie join casting on
+		movie.id = casting.movieid
+	where movie.yr = 1978
+group by movie.title
+order by count(casting.actorid) desc
 
 
