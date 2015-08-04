@@ -1,0 +1,2 @@
+# Solutions to SQLZoo's sql tutorials #
+One of the jobs I'm applying to wanted me to be familiar with complex SQL queries, so I worked through <a href="http://sqlzoo.net/" target="_blank">SQLZoo's tutorials</a>. I'll finish this in the next couple of days.
