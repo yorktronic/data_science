@@ -9,6 +9,7 @@ import datetime
 import pandas as pd
 import requests
 import sqlite3 as lite
+import collections
 
 # Latitude and longitude of the cities that we'll be querying
 cities = {"atlanta": '33.762909,-84.422675', 
@@ -34,19 +35,20 @@ cities = {"atlanta": '33.762909,-84.422675',
 # API key for forecast.io
 apiKey = 'b4aac1bc1eeff8f5ba9a3d12d72182c4'
 
-# Formatting string for datetime object, because Windows is stupid
-dateFormat = '%Y-%m-%d %H:%M:%S'
+# Formatting string for datetime object, because Windows is stupid (add %H:%M:%S if you need time)
+dateFormat = '%Y-%m-%d'
 
-# startDate is 30 days ago today, converted to integer epoch time
+# startDate is 30 days ago today, stored as epoch time
 startDate = int(((datetime.datetime.now() - datetime.timedelta(days=30)) - datetime.datetime(1970,1,1)).total_seconds())
 
-time = startDate
+# Get today's date in epoch time
+todayEpoch = int((datetime.datetime.now() - datetime.datetime(1970,1,1)).total_seconds())
 
 # Get the daily max temperature from the JSON object
 #tempMax = r.json()['daily']['data'][0]['temperatureMax']
 
 # sql table creation string
-createTable = 'CREATE TABLE daily_max_temperature (date INT PRIMARY KEY, '
+createTable = 'CREATE TABLE daily_max_temperature (date TEXT PRIMARY KEY, '
 
 # INSERT INTO string
 sql = "INSERT INTO daily_max_temperature (date, "
@@ -78,7 +80,7 @@ def getMaxTemps(t):
 		
 		# Create the API call string and get the JSON object from forecast.io
 		# API call format: 'https://api.forecast.io/forecast/APIKEY/LATITUDE,LONGITUDE,TIME'
-		apiCall = 'https://api.forecast.io/forecast/{}/{}/'.format(apiKey, (cities[k] + ',' + str(time)))
+		apiCall = 'https://api.forecast.io/forecast/{}/{}/'.format(apiKey, (cities[k] + ',' + str(startDate)))
 		r = requests.get(apiCall)
 
 		# Get the max temp on this particular day from the JSON object and add it to the dictionary of max temps
@@ -88,20 +90,16 @@ def getMaxTemps(t):
 
 # Next, create a loop that calls getMaxTemps with a day, then takes the dictionary and uses its contents to update the database...
 
-dayZero = getMaxTemps(startDate)
+# Insert the epoch times into the table as indexes, then query the forecast.io API to get the daily max temperatures for those dates and update the database with the values
 
-with con:
-	cur.execute("INSERT INTO daily_max_temperature (date) VALUES (?)", (startDate,))
+while (startDate <= todayEpoch):
+
+	cur.execute("INSERT INTO daily_max_temperature (date) values (?)", (str(startDate),))
 	
-
-
-
-
-
-
-
-
-
-
-
-
+	maxTemps = getMaxTemps(startDate)
+	
+	with con:
+		for k, v in maxTemps.iteritems():
+			cur.execute("UPDATE daily_max_temperature SET " + k + " = " + str(v) + " WHERE date = " + str(startDate) + ";")
+	
+	startDate += (60 * 60 * 24) #number of seconds in a day
