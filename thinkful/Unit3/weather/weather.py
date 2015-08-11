@@ -103,3 +103,5 @@ while (startDate <= todayEpoch):
 			cur.execute("UPDATE daily_max_temperature SET " + k + " = " + str(v) + " WHERE date = " + str(startDate) + ";")
 	
 	startDate += (60 * 60 * 24) #number of seconds in a day
+
+# Fix this to log a text / date index
