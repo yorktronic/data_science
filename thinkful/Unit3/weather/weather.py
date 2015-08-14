@@ -88,8 +88,6 @@ def getMaxTemps(t):
 
 	return maxTemps
 
-# Next, create a loop that calls getMaxTemps with a day, then takes the dictionary and uses its contents to update the database...
-
 # Insert the epoch times into the table as indexes, then query the forecast.io API to get the daily max temperatures for those dates and update the database with the values
 
 while (startDate <= todayEpoch):
