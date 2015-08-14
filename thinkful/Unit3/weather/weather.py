@@ -48,7 +48,7 @@ todayEpoch = int((datetime.datetime.now() - datetime.datetime(1970,1,1)).total_s
 #tempMax = r.json()['daily']['data'][0]['temperatureMax']
 
 # sql table creation string
-createTable = 'CREATE TABLE daily_max_temperature (date TEXT PRIMARY KEY, '
+createTable = 'CREATE TABLE daily_max_temperature (date int PRIMARY KEY, '
 
 # INSERT INTO string
 sql = "INSERT INTO daily_max_temperature (date, "
