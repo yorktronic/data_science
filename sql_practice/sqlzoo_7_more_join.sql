@@ -60,8 +60,8 @@ order by yr
 # Get the names of those actors from the actor table
 select movie.title, actor.name
 	from movie join casting on (movie.id = casting.movieid)
-	join actor on (casting.actorid = actor.id)
-	where (movie.yr = 1962 and casting.ord = 1)
+		join actor on (casting.actorid = actor.id)
+			where (movie.yr = 1962 and casting.ord = 1)
 
 # Question 12 - Which were the busiest years for John Travolta? Show the year and the number of movies he made for any year when he made more than two movies
 # Get his actorid from the actor table
