@@ -1,6 +1,6 @@
 ##############################
 #
-# Learning to scrape data from HTML - gonna scrape some UN data, yo
+# Scrape data from a United Nations HTML dataset from archive.org
 # 
 ##############################
 
@@ -18,21 +18,23 @@ soup = BeautifulSoup(r.content, 'lxml')
 # Cut out most of what you don't need
 table = soup.find_all(class_="tcont")
 
-# This gets you some of the way there, but you end up with a bunch of empty list entries. Will need to loop through and remove anything that is empty
-
+# Create empty list for entries
 entries = []
 
+# Add the entry from each cont to entries
 for cont in table:
+	# Grab the data based on newlines
+	# This will add blank data to the list for countries with more than one word in their name
 	entry = cont.get_text().encode('ascii', 'ignore').split('\n')
 	entries.append(entry)
 
-# Manually go in to the list and remove + correct the countries that are messed up?
+# Create a new list to resolve the countries with blank entries for their name 
 clean_entries = []
-
+# Check for blank entries
 for entry in entries:
 	items = []
 	for item in entry:
 		if item != '':
 			items.append(item)
-
+	# Populate the list
 	clean_entries.append(items)
