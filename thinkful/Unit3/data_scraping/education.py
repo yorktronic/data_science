@@ -12,27 +12,26 @@ import requests
 url = 'http://web.archive.org/web/20110514112442/http://unstats.un.org/unsd/demographic/products/socind/education.htm'
 r = requests.get(url)
 
-# Pass the data to BeautifulSoup
+# Pass the data to BeautifulSoup for parsing
 soup = BeautifulSoup(r.content, 'lxml')
 
-# Cut out most of what you don't need
+# Only scrape entries where class is tcont
 table = soup.find_all(class_="tcont")
 
-# This gets you some of the way there, but you end up with a bunch of empty list entries. Will need to loop through and remove anything that is empty
-
+# Put all contries in a list of lists
+# This will create blank entries for countries with spaces in their names
 entries = []
-
 for cont in table:
 	entry = cont.get_text().encode('ascii', 'ignore').split('\n')
 	entries.append(entry)
 
-# Manually go in to the list and remove + correct the countries that are messed up?
+# Create a new list that does not contain any empty items (item = word)
 clean_entries = []
-
 for entry in entries:
-	items = []
-	for item in entry:
-		if item != '':
-			items.append(item)
+	words = []
+	for word in entry:
+		if word != '':
+			items.append(word)
 
-	clean_entries.append(items)
+	clean_entries.append(words)
+
