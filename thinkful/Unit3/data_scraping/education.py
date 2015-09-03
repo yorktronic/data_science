@@ -34,7 +34,16 @@ clean_entries = []
 for entry in entries:
 	items = []
 	for item in entry:
-		if item != '':
+		if item not in ['', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
+		'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']:
 			items.append(item)
 	# Populate the list
 	clean_entries.append(items)
+
+# Drop the last six entries, they are legend data
+clean_entries = clean_entries[:-6]
+
+# Create dataframe with country, year, male, and female life expectancy
+import pandas as pd
+df = pd.DataFrame(clean_entries, columns=['country', 'year', 'avg', 'male', 'female'])
+df = df.set_index('country')
