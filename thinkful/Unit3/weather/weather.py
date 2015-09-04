@@ -1,6 +1,7 @@
 ####################################
 #
-# Pull data from cities throughout the United States and determine which state had the largest temperature swing for a given month
+# Pull data from cities throughout the United States 
+# Determine which state had the largest temperature swing for a given month
 #
 ####################################
 
@@ -35,11 +36,13 @@ cities = {"atlanta": '33.762909,-84.422675',
 # API key for forecast.io
 apiKey = 'b4aac1bc1eeff8f5ba9a3d12d72182c4'
 
-# Formatting string for datetime object, because Windows is stupid (add %H:%M:%S if you need time)
+# Formatting string for datetime object, in case we need it
+# Add %H:%M:%S if you need time
 dateFormat = '%Y-%m-%d'
 
 # startDate is 30 days ago today, stored as epoch time
-startDate = int(((datetime.datetime.now() - datetime.timedelta(days=30)) - datetime.datetime(1970,1,1)).total_seconds())
+startDate = int(((datetime.datetime.now() - datetime.timedelta(days=30))
+				- datetime.datetime(1970,1,1)).total_seconds())
 
 # Get today's date in epoch time
 todayEpoch = int((datetime.datetime.now() - datetime.datetime(1970,1,1)).total_seconds())
@@ -58,7 +61,7 @@ for k in cities:
 	createTable += (k + ' FLOAT, ')
 	sql += (k + ', ')
 
-# Remove the training whitespace and comma from both strings, add a close parenthesis, etc
+# Remove the training whitespace and comma from both strings and add a close parenthesis
 createTable = createTable[:-2]
 sql = sql[:-2]
 createTable += ')'
@@ -71,7 +74,8 @@ with con:
 	cur.execute("DROP TABLE IF EXISTS daily_max_temperature")
 	cur.execute(createTable)
 
-# Function that gets the max temps for the specified time (day) and returns a dict with the city name as the key and the max temp for that city
+# Function that gets the max temps for the specified time (day) and returns a dict 
+# Dict contains key = city name and value = max temp for city on given day
 def getMaxTemps(t):
 	
 	maxTemps = {}
@@ -80,26 +84,30 @@ def getMaxTemps(t):
 		
 		# Create the API call string and get the JSON object from forecast.io
 		# API call format: 'https://api.forecast.io/forecast/APIKEY/LATITUDE,LONGITUDE,TIME'
-		apiCall = 'https://api.forecast.io/forecast/{}/{}/'.format(apiKey, (cities[k] + ',' + str(startDate)))
+		apiCall = 'https://api.forecast.io/forecast/{}/{}/'.format(apiKey, (cities[k] + ',' 
+			+ str(startDate)))
 		r = requests.get(apiCall)
 
-		# Get the max temp on this particular day from the JSON object and add it to the dictionary of max temps
+		# Get the max temp on this particular day add it to the dictionary of max temps
 		maxTemps[k] = r.json()['daily']['data'][0]['temperatureMax']
 
 	return maxTemps
 
-# Insert the epoch times into the table as indexes, then query the forecast.io API to get the daily max temperatures for those dates and update the database with the values
+##############################################
+# Get max temps and put them in the database #
+##############################################
 
 while (startDate <= todayEpoch):
-
+	# Insert the epoch times into the table as indexes
 	cur.execute("INSERT INTO daily_max_temperature (date) values (?)", (str(startDate),))
-	
+	# Then query the forecast.io API to get the daily max temperatures for those dates 
 	maxTemps = getMaxTemps(startDate)
-	
+	# Update the database with the values	
 	with con:
 		for k, v in maxTemps.iteritems():
-			cur.execute("UPDATE daily_max_temperature SET " + k + " = " + str(v) + " WHERE date = " + str(startDate) + ";")
+			cur.execute("UPDATE daily_max_temperature SET " + k + " = " + str(v) + " WHERE date = " 
+				+ str(startDate) + ";")
 	
 	startDate += (60 * 60 * 24) #number of seconds in a day
 
-# Fix this to log a text / date index
+# Later: revise this to log a date that is a string, rather than using a long int

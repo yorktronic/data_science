@@ -1,37 +1,39 @@
 ##############################
 #
-# Learning to scrape data from HTML - gonna scrape some UN data, yo
-# 
+# Scrape data from a United Nations HTML dataset from archive.org
+# The data contains the "educational life expectancy" of men and women in school, broken up
+# by country and year. The number of years a person is expected to be in school. 
+#
 ##############################
 
 # Import required libraries
 from bs4 import BeautifulSoup
 import requests
+import pandas as pd
 
 # Pull the data
 url = 'http://web.archive.org/web/20110514112442/http://unstats.un.org/unsd/demographic/products/socind/education.htm'
 r = requests.get(url)
 
-# Pass the data to BeautifulSoup for parsing
+# Pass the data to BeautifulSoup (the scraper)
 soup = BeautifulSoup(r.content, 'lxml')
 
-# Only scrape entries where class is tcont
-table = soup.find_all(class_="tcont")
+# Create a dataframe to hold the data
+# The data consists of the number of years men and women spend in school by country and year
+# avg is (men + women) / 2
+df = pd.DataFrame(columns=['country', 'year', 'avg', 'male', 'female'])
 
-# Put all contries in a list of lists
-# This will create blank entries for countries with spaces in their names
-entries = []
-for cont in table:
-	entry = cont.get_text().encode('ascii', 'ignore').split('\n')
-	entries.append(entry)
+# Get all the rows from soup (everything with a 'tr' tag within the correct indexes)
+rows = soup.findAll('tr')[18:-11]
 
-# Create a new list that does not contain any empty items (item = word)
-clean_entries = []
-for entry in entries:
-	words = []
-	for word in entry:
-		if word != '':
-			items.append(word)
+# Loop through the rows to get the data from each column
+k = 0
+for row in rows:
+	col = row.findAll('td')
+	# The columns for country, year, average, male, and female are in 0,1,4,7, and 10
+	df.loc[k] = [col[0].text,col[1].text,col[4].text,col[7].text,col[10].text]
+	k += 1
 
-	clean_entries.append(words)
+# Set the dataframe index to country
+df = df.set_index('country')
 
