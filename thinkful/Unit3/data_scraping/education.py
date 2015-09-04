@@ -12,7 +12,7 @@ import requests
 url = 'http://web.archive.org/web/20110514112442/http://unstats.un.org/unsd/demographic/products/socind/education.htm'
 r = requests.get(url)
 
-# Pass the data to BeautifulSoup
+# Pass the data to BeautifulSoup (the scraper)
 soup = BeautifulSoup(r.content, 'lxml')
 
 # Cut out most of what you don't need
