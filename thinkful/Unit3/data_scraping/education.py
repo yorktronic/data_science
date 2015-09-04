@@ -1,7 +1,9 @@
 ##############################
 #
 # Scrape data from a United Nations HTML dataset from archive.org
-# 
+# The data contains the "educational life expectancy" of men and women in school, broken up
+# by country and year. The number of years a person is expected to be in school. 
+#
 ##############################
 
 # Import required libraries
