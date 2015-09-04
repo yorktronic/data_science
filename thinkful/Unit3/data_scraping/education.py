@@ -17,6 +17,8 @@ r = requests.get(url)
 soup = BeautifulSoup(r.content, 'lxml')
 
 # Create a dataframe to hold the data
+# The data consists of the number of years men and women spend in school by country and year
+# avg is (men + women) / 2
 df = pd.DataFrame(columns=['country', 'year', 'avg', 'male', 'female'])
 
 # Get all the rows from soup (everything with a 'tr' tag within the correct indexes)
