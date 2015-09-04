@@ -1,6 +1,8 @@
 #########################
 #
-# Multivariate analysis of Loan Data from Lending Club, testing to see how annual income is correlated with interest rate, and how annual income AND home ownership is correlated with interest rate
+# Multivariate analysis of Loan Data from Lending Club, testing to see how annual income 
+# is correlated with interest rate, and how annual income AND home ownership is correlated 
+# with interest rate
 #
 #########################
 
@@ -10,7 +12,8 @@ import numpy as np
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 
-# Import the 2015 - 3/31/2015 data on approved loans. The 0th row of the csv has useless text so specify the header starts at row 1
+# Import the 2015 - 3/31/2015 data on approved loans. The 0th row of the csv has useless 
+# text so specify the header starts at row 1
 df = pd.read_csv('./db/LoanStats3d.csv', header=1)
 
 # Make a new dataframe with only the columns we need

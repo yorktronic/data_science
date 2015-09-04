@@ -84,7 +84,8 @@ def getMaxTemps(t):
 		
 		# Create the API call string and get the JSON object from forecast.io
 		# API call format: 'https://api.forecast.io/forecast/APIKEY/LATITUDE,LONGITUDE,TIME'
-		apiCall = 'https://api.forecast.io/forecast/{}/{}/'.format(apiKey, (cities[k] + ',' + str(startDate)))
+		apiCall = 'https://api.forecast.io/forecast/{}/{}/'.format(apiKey, (cities[k] + ',' 
+			+ str(startDate)))
 		r = requests.get(apiCall)
 
 		# Get the max temp on this particular day add it to the dictionary of max temps
@@ -104,7 +105,8 @@ while (startDate <= todayEpoch):
 	# Update the database with the values	
 	with con:
 		for k, v in maxTemps.iteritems():
-			cur.execute("UPDATE daily_max_temperature SET " + k + " = " + str(v) + " WHERE date = " + str(startDate) + ";")
+			cur.execute("UPDATE daily_max_temperature SET " + k + " = " + str(v) + " WHERE date = " 
+				+ str(startDate) + ";")
 	
 	startDate += (60 * 60 * 24) #number of seconds in a day
 
