@@ -19,11 +19,7 @@ soup = BeautifulSoup(r.content, 'lxml')
 # Create a dataframe to hold the data
 df = pd.DataFrame(columns=['country', 'year', 'avg', 'male', 'female'])
 
-########################################################################
-# Get all the rows we need from the page, then get the correct columns #
-########################################################################
-
-# Get all the rows (everything with a 'tr' tag within the correct indexes)
+# Get all the rows from soup (everything with a 'tr' tag within the correct indexes)
 rows = soup.findAll('tr')[18:-11]
 
 # Loop through the rows to get the data from each column
