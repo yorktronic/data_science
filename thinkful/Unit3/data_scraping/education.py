@@ -31,9 +31,27 @@ k = 0
 for row in rows:
 	col = row.findAll('td')
 	# The columns for country, year, average, male, and female are in 0,1,4,7, and 10
-	df.loc[k] = [col[0].text,col[1].text,col[4].text,col[7].text,col[10].text]
+	df.loc[k] = [col[0].text,int(col[1].text),int(col[4].text),int(col[7].text),
+					int(col[10].text)]
 	k += 1
 
 # Set the dataframe index to country
 df = df.set_index('country')
 
+stats = pd.DataFrame(columns=['gender', 'minCountry', 'min', 'maxCountry', 'max', 
+							'median', 'mean'])
+avg = df['avg']
+male = df['male']
+female = df['female']
+
+minCountryMale = str(df[df['male'] == male.min()].index.tolist()[0])
+minCountryFemale = str(df[df['female'] == male.min()].index.tolist()[0])
+maxCountryMale = str(df[df['male'] == male.max()].index.tolist()[0])
+maxCountryFemale = str(df[df['female'] == male.max()].index.tolist()[0])
+
+stats.loc[0] = ['male', minCountryMale, male.min(), maxCountryMale, male.max(), 
+						male.median(), male.mean()]
+stats.loc[1] = ['female', minCountryFemale, female.min(), maxCountryFemale, female.max(),
+						female.median(), female.mean()]
+
+stats = stats.set_index('gender')
