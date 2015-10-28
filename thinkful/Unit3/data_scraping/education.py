@@ -10,6 +10,7 @@
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
+import sqlite3 as lite
 
 # Pull the data
 url = 'http://web.archive.org/web/20110514112442/http://unstats.un.org/unsd/demographic/products/socind/education.htm'
@@ -38,6 +39,7 @@ for row in rows:
 # Set the dataframe index to country
 df = df.set_index('country')
 
+# Create a dataframe summarizing male and 
 stats = pd.DataFrame(columns=['gender', 'minCountry', 'min', 'maxCountry', 'max', 
 							'median', 'mean'])
 avg = df['avg']
@@ -46,12 +48,59 @@ female = df['female']
 
 minCountryMale = str(df[df['male'] == male.min()].index.tolist()[0])
 minCountryFemale = str(df[df['female'] == male.min()].index.tolist()[0])
+
 maxCountryMale = str(df[df['male'] == male.max()].index.tolist()[0])
 maxCountryFemale = str(df[df['female'] == male.max()].index.tolist()[0])
+
+minCountryAvg = str(df[df['avg'] == avg.min()].index.tolist()[0])
+maxCountryAvg = str(df[df['avg'] == avg.max()].index.tolist()[0])
+
 
 stats.loc[0] = ['male', minCountryMale, male.min(), maxCountryMale, male.max(), 
 						male.median(), male.mean()]
 stats.loc[1] = ['female', minCountryFemale, female.min(), maxCountryFemale, female.max(),
 						female.median(), female.mean()]
+stats.loc[2] = ['avg', minCountryAvg, avg.min(), maxCountryAvg, avg.max(), avg.median(), 
+						avg.mean()]
 
 stats = stats.set_index('gender')
+
+# Now we pull in GDP data from the world bank
+gdpData = pd.read_csv('./db/ny.gdp.mktp.cd_Indicator_en_csv_v2.csv', header=2)
+gdpData = gdpData.set_index('Country Name') # set the index to country name to match our education dataframe
+
+# Drop some of the columns we don't need
+gdpData = gdpData.drop(gdpData.columns[[0, 1, 2, -1]], axis=1)
+
+# Create a list of the column names to filter out the years we don't need
+gdpColumns = list(gdpData.columns.values)
+
+# Remove years we don't need from the gdp data dataframe
+for column in gdpColumns:
+	if (int(column) < 1999) or (int(column) > 2010):
+		gdpData = gdpData.drop(column, 1)
+
+'''
+# Create the database
+createTable = 'CREATE TABLE gdp (country_name TEXT PRIMARY KEY, _1999 INT, _2000 INT, _2001 INT, _2002 INT, _2003 INT, _2004 INT, _2005 INT, _2006 INT, _2007 INT, _2008 INT, _2009 INT, _2010 INT)'
+
+con = lite.connect('./db/gdp.db')
+cur = con.cursor()
+
+with con:
+	cur.execute("DROP TABLE IF EXISTS gdp")
+	cur.execute(createTable)
+
+# Parse through the gdp data in the CSV file from the world bank
+import csv
+
+with open('./db/ny.gdp.mktp.cd_Indicator_en_csv_v2.csv', 'rU') as inputFile:
+	next(inputFile) # skip the first two lines
+	next(inputFile)
+	header = next(inputFile)
+	inputReader = csv.reader(inputFile)
+
+	for line in inputReader:
+		with con:
+			cur.execute('INSERT INTO gdp (country_name, _1999, _2000, _2001, _2002, _2003, _2004, _2005, _2006, _2007, _2008, _2009, _2010) VALUES ("' + line[0] + '","' + '","'.join(line[42:-5]) + '");')
+			'''
