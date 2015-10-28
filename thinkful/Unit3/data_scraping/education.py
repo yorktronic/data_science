@@ -32,14 +32,17 @@ k = 0
 for row in rows:
 	col = row.findAll('td')
 	# The columns for country, year, average, male, and female are in 0,1,4,7, and 10
-	df.loc[k] = [col[0].text,int(col[1].text),int(col[4].text),int(col[7].text),
+	df.loc[k] = [(col[0].text).encode('ascii', 'ignore'),int(col[1].text),int(col[4].text),int(col[7].text),
 					int(col[10].text)]
 	k += 1
 
 # Set the dataframe index to country
 df = df.set_index('country')
 
-# Create a dataframe summarizing male and 
+########################################
+# Stats analysis of the data #
+########################################
+
 stats = pd.DataFrame(columns=['gender', 'minCountry', 'min', 'maxCountry', 'max', 
 							'median', 'mean'])
 avg = df['avg']
@@ -65,7 +68,9 @@ stats.loc[2] = ['avg', minCountryAvg, avg.min(), maxCountryAvg, avg.max(), avg.m
 
 stats = stats.set_index('gender')
 
-# Now we pull in GDP data from the world bank
+########################################
+# Pull in GDP data from the World Bank #
+########################################
 gdpData = pd.read_csv('./db/ny.gdp.mktp.cd_Indicator_en_csv_v2.csv', header=2)
 gdpData = gdpData.set_index('Country Name') # set the index to country name to match our education dataframe
 
@@ -79,6 +84,31 @@ gdpColumns = list(gdpData.columns.values)
 for column in gdpColumns:
 	if (int(column) < 1999) or (int(column) > 2010):
 		gdpData = gdpData.drop(column, 1)
+
+##################################################################
+# Add GDP data from appropriate dates to the education dataframe #
+##################################################################
+
+# List countries in education dataframe but not in gdp dataframe
+educationNotGdp = []
+gdpNotEducation = []
+gdpCountries = list(gdpData.index)
+educationCountries = list(df.index)
+
+for country in educationCountries:
+	if country not in gdpCountries:
+		educationNotGdp.append(country)
+
+def fuzzThis(countries, choices):
+	from fuzzywuzzy import fuzz
+	from fuzzywuzzy import process
+
+	matches = {}
+	for country in countries:
+		print country
+		print process.extractOne(country, choices)
+
+fuzzThis(educationNotGdp, gdpCountries)
 
 '''
 # Create the database
