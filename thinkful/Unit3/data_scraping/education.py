@@ -110,6 +110,9 @@ def fuzzThis(countries, choices):
 
 fuzzThis(educationNotGdp, gdpCountries)
 
+# Old code from when I though I was going to create a SQL database for this problem, which I 
+# probably am not going to do
+
 '''
 # Create the database
 createTable = 'CREATE TABLE gdp (country_name TEXT PRIMARY KEY, _1999 INT, _2000 INT, _2001 INT, _2002 INT, _2003 INT, _2004 INT, _2005 INT, _2006 INT, _2007 INT, _2008 INT, _2009 INT, _2010 INT)'
