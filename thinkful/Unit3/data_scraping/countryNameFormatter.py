@@ -11,8 +11,11 @@ import requests
 
 testData = ['United States of America', 'Afghanistan', 'Fiji', 'Uzbekistan', 'New Freeland', 'Aruba']
 
-def formatter(countries):
-	allCountries = requests.get('https://restcountries.eu/rest/v1/all')
+#def formatter(countries):
+allCountries = requests.get('https://restcountries.eu/rest/v1/all')
 	# loop through the passed in list and print out matches and lack of matches
 	
 
+altNames = []
+
+# when calling restcountries, pay attention to relevance
