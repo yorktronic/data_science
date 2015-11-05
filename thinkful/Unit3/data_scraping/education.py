@@ -52,17 +52,18 @@ def getEducationData():
 
 def educationAnalysis(df):
 
+	# RefactorMe
 	stats = pd.DataFrame(columns=['gender', 'minCountry', 'min', 'maxCountry', 'max', 
 							'median', 'mean'])
 	avg = df['avg']
 	male = df['male']
 	female = df['female']
 
-	minCountryMale = str(df[df['male'] == male.min()].index.tolist()[0])
-	minCountryFemale = str(df[df['female'] == male.min()].index.tolist()[0])
+	minCountryMale = str(df[df['male'] == df['male'].min()].index.tolist()[0])
+	minCountryFemale = str(df[df['female'] == df['female'].min()].index.tolist()[0])
 
 	maxCountryMale = str(df[df['male'] == male.max()].index.tolist()[0])
-	maxCountryFemale = str(df[df['female'] == male.max()].index.tolist()[0])
+	maxCountryFemale = str(df[df['female'] == female.max()].index.tolist()[0])
 
 	minCountryAvg = str(df[df['avg'] == avg.min()].index.tolist()[0])
 	maxCountryAvg = str(df[df['avg'] == avg.max()].index.tolist()[0])
@@ -91,13 +92,10 @@ def getGdp():
 	# Drop some of the columns we don't need
 	gdpData = gdpData.drop(gdpData.columns[[0, 1, 2, -1]], axis=1)
 
-	# Create a list of the column names to filter out the years we don't need
-	gdpColumns = list(gdpData.columns.values)
-
 	# Remove years we don't need from the gdp data dataframe
-	for column in gdpColumns:
-		if (int(column) < 1999) or (int(column) > 2010):
-			gdpData = gdpData.drop(column, 1)
+	for year in gdpData.columns.values:
+		if (int(year) < 1999 or int(year) > 2010):
+			gdpData = gdpData.drop(year, 1)
 
 	return gdpData
 
