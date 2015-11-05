@@ -52,7 +52,7 @@ def getEducationData():
 
 def educationAnalysis(df):
 
-	# RefactorMe
+	# RefactorMe? Will likely rewrite later once the two datasets are merged
 	stats = pd.DataFrame(columns=['gender', 'minCountry', 'min', 'maxCountry', 'max', 
 							'median', 'mean'])
 	avg = df['avg']
@@ -116,8 +116,9 @@ def fuzzThis(countries, choices):
 # Add GDP data from appropriate dates to the education dataframe #
 ##################################################################
 
-def mergeDatasets():
+def mergeDatasets(educationData, gdpData):
 
+	# RefactorMe
 	# List countries in education dataframe but not in gdp dataframe
 	educationNotGdp = []
 	gdpNotEducation = []
