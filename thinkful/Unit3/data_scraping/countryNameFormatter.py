@@ -14,5 +14,3 @@ testData = ['United States of America', 'Afghanistan', 'Fiji', 'Uzbekistan', 'Ne
 def formatter(countries):
 	allCountries = requests.get('https://restcountries.eu/rest/v1/all')
 	# loop through the passed in list and print out matches and lack of matches
-	
-
