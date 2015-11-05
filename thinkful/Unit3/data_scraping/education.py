@@ -12,103 +12,127 @@ import requests
 import pandas as pd
 import sqlite3 as lite
 
-# Pull the data
-url = 'http://web.archive.org/web/20110514112442/http://unstats.un.org/unsd/demographic/products/socind/education.htm'
-r = requests.get(url)
+###########################################
+# Scrape United Nations education dataset #
+###########################################
 
-# Pass the data to BeautifulSoup (the scraper)
-soup = BeautifulSoup(r.content, 'lxml')
+def getEducationData():
 
-# Create a dataframe to hold the data
-# The data consists of the number of years men and women spend in school by country and year
-# avg is (men + women) / 2
-df = pd.DataFrame(columns=['country', 'year', 'avg', 'male', 'female'])
+	# Pull the data from the UN website on archive.org
+	url = 'http://web.archive.org/web/20110514112442/http://unstats.un.org/unsd/demographic/products/socind/education.htm'
+	r = requests.get(url)
 
-# Get all the rows from soup (everything with a 'tr' tag within the correct indexes)
-rows = soup.findAll('tr')[18:-11]
+	# Pass the data to BeautifulSoup (the scraper)
+	soup = BeautifulSoup(r.content, 'lxml')
 
-# Loop through the rows to get the data from each column
-k = 0
-for row in rows:
-	col = row.findAll('td')
-	# The columns for country, year, average, male, and female are in 0,1,4,7, and 10
-	df.loc[k] = [(col[0].text).encode('ascii', 'ignore'),int(col[1].text),int(col[4].text),int(col[7].text),
+	# The data consists of the number of years men and women spend in school by country and year
+	# avg is (men + women) / 2
+	df = pd.DataFrame(columns=['country', 'year', 'avg', 'male', 'female'])
+
+	# Get all the rows from soup (everything with a 'tr' tag within the correct indexes)
+	rows = soup.findAll('tr')[18:-11]
+
+	# Populate the dataframe with columnar data by parsing through each valid <td> HTML tag
+	k = 0
+	for row in rows:
+		col = row.findAll('td')
+		# The columns for country, year, average, male, and female are in 0,1,4,7, and 10
+		df.loc[k] = [(col[0].text).encode('ascii', 'ignore'),int(col[1].text),int(col[4].text),int(col[7].text),
 					int(col[10].text)]
-	k += 1
+		k += 1
 
-# Set the dataframe index to country
-df = df.set_index('country')
+	# Set the dataframe index to country
+	df = df.set_index('country')
+
+	return df
 
 ########################################
-# Stats analysis of the data #
+# Stats analysis of the data
 ########################################
 
-stats = pd.DataFrame(columns=['gender', 'minCountry', 'min', 'maxCountry', 'max', 
+def educationAnalysis(df):
+
+	stats = pd.DataFrame(columns=['gender', 'minCountry', 'min', 'maxCountry', 'max', 
 							'median', 'mean'])
-avg = df['avg']
-male = df['male']
-female = df['female']
+	avg = df['avg']
+	male = df['male']
+	female = df['female']
 
-minCountryMale = str(df[df['male'] == male.min()].index.tolist()[0])
-minCountryFemale = str(df[df['female'] == male.min()].index.tolist()[0])
+	minCountryMale = str(df[df['male'] == male.min()].index.tolist()[0])
+	minCountryFemale = str(df[df['female'] == male.min()].index.tolist()[0])
 
-maxCountryMale = str(df[df['male'] == male.max()].index.tolist()[0])
-maxCountryFemale = str(df[df['female'] == male.max()].index.tolist()[0])
+	maxCountryMale = str(df[df['male'] == male.max()].index.tolist()[0])
+	maxCountryFemale = str(df[df['female'] == male.max()].index.tolist()[0])
 
-minCountryAvg = str(df[df['avg'] == avg.min()].index.tolist()[0])
-maxCountryAvg = str(df[df['avg'] == avg.max()].index.tolist()[0])
+	minCountryAvg = str(df[df['avg'] == avg.min()].index.tolist()[0])
+	maxCountryAvg = str(df[df['avg'] == avg.max()].index.tolist()[0])
 
 
-stats.loc[0] = ['male', minCountryMale, male.min(), maxCountryMale, male.max(), 
+	stats.loc[0] = ['male', minCountryMale, male.min(), maxCountryMale, male.max(), 
 						male.median(), male.mean()]
-stats.loc[1] = ['female', minCountryFemale, female.min(), maxCountryFemale, female.max(),
+	stats.loc[1] = ['female', minCountryFemale, female.min(), maxCountryFemale, female.max(),
 						female.median(), female.mean()]
-stats.loc[2] = ['avg', minCountryAvg, avg.min(), maxCountryAvg, avg.max(), avg.median(), 
+	stats.loc[2] = ['avg', minCountryAvg, avg.min(), maxCountryAvg, avg.max(), avg.median(), 
 						avg.mean()]
 
-stats = stats.set_index('gender')
+	stats = stats.set_index('gender')
+
+	return stats
 
 ########################################
 # Pull in GDP data from the World Bank #
 ########################################
-gdpData = pd.read_csv('./db/ny.gdp.mktp.cd_Indicator_en_csv_v2.csv', header=2)
-gdpData = gdpData.set_index('Country Name') # set the index to country name to match our education dataframe
 
-# Drop some of the columns we don't need
-gdpData = gdpData.drop(gdpData.columns[[0, 1, 2, -1]], axis=1)
+def getGdp():
 
-# Create a list of the column names to filter out the years we don't need
-gdpColumns = list(gdpData.columns.values)
+	gdpData = pd.read_csv('./db/ny.gdp.mktp.cd_Indicator_en_csv_v2.csv', header=2)
+	gdpData = gdpData.set_index('Country Name')
 
-# Remove years we don't need from the gdp data dataframe
-for column in gdpColumns:
-	if (int(column) < 1999) or (int(column) > 2010):
-		gdpData = gdpData.drop(column, 1)
+	# Drop some of the columns we don't need
+	gdpData = gdpData.drop(gdpData.columns[[0, 1, 2, -1]], axis=1)
+
+	# Create a list of the column names to filter out the years we don't need
+	gdpColumns = list(gdpData.columns.values)
+
+	# Remove years we don't need from the gdp data dataframe
+	for column in gdpColumns:
+		if (int(column) < 1999) or (int(column) > 2010):
+			gdpData = gdpData.drop(column, 1)
+
+	return gdpData
+
+#############################################################
+# Fuzzy string matching helper function for merging datasets
+#############################################################
+
+def fuzzThis(countries, choices):
+
+		from fuzzywuzzy import fuzz
+		from fuzzywuzzy import process
+
+		for country in countries:
+			print country
+			print process.extractOne(country, choices)
 
 ##################################################################
 # Add GDP data from appropriate dates to the education dataframe #
 ##################################################################
 
-# List countries in education dataframe but not in gdp dataframe
-educationNotGdp = []
-gdpNotEducation = []
-gdpCountries = list(gdpData.index)
-educationCountries = list(df.index)
+def mergeDatasets():
 
-for country in educationCountries:
-	if country not in gdpCountries:
-		educationNotGdp.append(country)
+	# List countries in education dataframe but not in gdp dataframe
+	educationNotGdp = []
+	gdpNotEducation = []
+	gdpCountries = list(gdpData.index)
+	educationCountries = list(df.index)
 
-def fuzzThis(countries, choices):
-	from fuzzywuzzy import fuzz
-	from fuzzywuzzy import process
+	for country in educationCountries:
+		if country not in gdpCountries:
+			educationNotGdp.append(country)
 
-	matches = {}
-	for country in countries:
-		print country
-		print process.extractOne(country, choices)
+	# fuzzThis(educationNotGdp, gdpCountries)
 
-fuzzThis(educationNotGdp, gdpCountries)
+print educationAnalysis(getEducationData())
 
 # Old code from when I though I was going to create a SQL database for this problem, which I 
 # probably am not going to do
