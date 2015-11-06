@@ -1,13 +1,5 @@
 import unittest
 
-def fizzbuzz(n):
-    ret = ""
-    if not (n%3):
-        ret += "fizz"
-    if not (n%5):
-        ret += "buzz"
-    return ret or str(n)
-
 class ExampleTests(unittest.TestCase):
     
     def fizzbuzz_goodtest(f):
@@ -27,4 +19,12 @@ class ExampleTests(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 
-print ExampleTests.fizzbuzz_goodtest(fizzbuzz(15))
+def fizzbuzz(n):
+    ret = ""
+    if not (n%3):
+        ret += "fizz"
+    if not (n%5):
+        ret += "buzz"
+    return ret or str(n)
+
+fizzbuzz_goodtest(fizzbuzz(15))
