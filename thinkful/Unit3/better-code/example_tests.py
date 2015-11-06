@@ -27,4 +27,4 @@ class ExampleTests(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 
-#ExampleTests.fizzbuzz_goodtest(fizzbuzz(15))
+print ExampleTests.fizzbuzz_goodtest(fizzbuzz(15))
