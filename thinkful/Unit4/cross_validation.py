@@ -36,11 +36,21 @@ def clean():
     cleanScore = pd.Series( float(score.rpartition('-')[0]) for 
                 score in LOANS_DATA['FICO.Range'] )
 
+<<<<<<< HEAD
     cleanData = pd.DataFrame(columns=['Interest.Rate', 'Loan.Length', 'FICO.Score'])
+=======
+    # Create a new dataframe with the filtered / cleaned data
+    #
+    cleanData = pd.DataFrame(columns=['Interest.Rate', 'Loan.Length', 'FICO.Score', 'Amount.Requested'])
+>>>>>>> 4a2a36467cf283927e4f09db77bd964a06072e07
 
     cleanData['Interest.Rate'] = cleanRates
     cleanData['Loan.Length'] = cleanTerms
     cleanData['FICO.Score'] = cleanScore
+<<<<<<< HEAD
+=======
+    cleanData['Amount.Requested'] = LOANS_DATA['Amount.Requested']
+>>>>>>> 4a2a36467cf283927e4f09db77bd964a06072e07
 
     return cleanData
 
@@ -54,62 +64,66 @@ def linReg(cleanData):
     # Create variables
     y = np.matrix(cleanData['Interest.Rate']).transpose()
 
-    x1 = np.matrix(cleanData['Loan.Length']).transpose()
-    x2 = np.matrix(cleanData['FICO.Score']).transpose()
-
+    x1 = np.matrix(cleanData['FICO.Score']).transpose()
+    x2 = np.matrix(cleanData['Loan.Length']).transpose()
+    
     # Stack X1 and X2 for right side of equation
-    # x_stack = np.column_stack([x1, x2])
+    x_stack = np.column_stack([x1, x2])
 
     # Create the linear model
     #
-    x = sm.add_constant(x2)
+    x = sm.add_constant(x_stack)
     model = sm.OLS(y, x)
 
     return model
 
+###############################################
+# CROSS VALIDATION OF LINEAR REGRESSION MODEL #
+###############################################
+
+def kfCrossVal(loansData):
+    
+    # Import required libraries
+    from sklearn.cross_validation import cross_val_predict
+    from sklearn import linear_model
+    from sklearn.metrics import r2_score
+    import matplotlib.pyplot as plt
+    from sklearn.preprocessing import PolynomialFeatures
+
+    # Create linear regression model using FICO score as the only predictor
+    # Interest Rate is the dependent variable
+    lr = linear_model.LinearRegression()
+    y = loansData.as_matrix(columns=['Interest.Rate'])
+    
+    x = loansData[['Loan.Length', 'FICO.Score']].as_matrix()
+
+    # Run the kfold cross validation and store the results as an array
+    predicted = cross_val_predict(lr, x, y, cv=10)
+
+    # Try and run as quadratic?
+    # POLY2 = smf.ols(formula = 'Y ~ 1 + X + I(X**2)', data=TRAIN_DF).fit()
+
+    # Calculate R2
+    print("R Squared: {}".format(r2_score(y, predicted)))
+
+    '''
+    # Plot the actual versus predicted values
+    fix, ax = plt.subplots()
+    ax.scatter(y, predicted)
+    ax.plot([y.min(), y.max()], [y.min(), y.max()], 'k--', lw=4)
+    ax.set_xlabel('Measured')
+    ax.set_ylabel('Predicted')
+    plt.show()
+    '''
 
 #################################
 # SHOW REGRESSION MODEL SUMMARY #
 #################################
-'''
-from datetime import datetime
 
-startTime = datetime.now()
-print linReg(clean()).fit().summary()
-print ('\nScript took {} seconds to complete').format((datetime.now() - startTime).total_seconds())
-'''
+def linRegSummary():
+    from datetime import datetime
 
-#################################
-# K-Fold The Data               #
-#################################
-
-# Method that KFolds a supplied dataset
-from sklearn.cross_validation import KFold
-
-# Convert data from dataframe to numpy array
-cleanData = clean().as_matrix()
-
-# Split data into training and test sets using a 70 / 30 split
-train_end = int(round(len(cleanData) * 0.3))
-train = cleanData[:train_end]
-test = cleanData[(train_end + 1):]
-
-# Form the K-Fold cross validation. 10 folds.
-cv = cross_validation.KFold()
-
-x = cleanData['FICO.Score'].as_matrix()
-y = cleanData['Interest.Rate'].as_matrix()
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    startTime = datetime.now()
+    print linReg(clean()).fit().summary()
+    print ('\nScript took {} seconds to complete').format((datetime.now() - startTime).total_seconds())
 
