@@ -16,7 +16,7 @@ cleanRate = loansData['Interest.Rate'].map(lambda x: round((float(x.rstrip('%'))
 
 # Create a new set of loan lengths with the word "months" removed
 # 
-noMonths = loansData['Loan.Length'].map(lambda x: x.rstrip(' months'))
+noMonths = loansData['Loan.Length'].map(lambda x: int(x.rstrip(' months')))
 
 #...FICO scores by picking the first value out of the range
 #
@@ -41,14 +41,15 @@ y = np.matrix(intrate).transpose()
 # The independent variables
 x1 = np.matrix(fico).transpose()
 x2 = np.matrix(loanamt).transpose()
+x3 = np.matrix(loansData['Loan.Length']).transpose()
 
 # Stack the fico and loanamt variables to form value pairs
 # 
-x = np.column_stack([x1, x2])
+x = np.column_stack([x1, x2, x3])
 
 # Create the linear model
 #
-X = sm.add_constant(x)
+X = sm.add_constant(x1)
 model = sm.OLS(y,X)
 f = model.fit()
 
