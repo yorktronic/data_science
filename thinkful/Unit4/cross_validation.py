@@ -24,33 +24,24 @@ LOANS_DATA.dropna(inplace=True)
 
 def clean():
 
+    # New dataframe for the cleaned data
+    cleanData = pd.DataFrame(columns=['Interest.Rate', 'Loan.Length', 'FICO.Score', 
+        'Amount.Requested'])
+
     # Remove % from interest rates and convert to 4-precision float
-    cleanRates = pd.Series( (round((float(rate.rstrip('%')) / 100), 4)) for 
+    cleanData['Interest.Rate'] = pd.Series( (round((float(rate.rstrip('%')) / 100), 4)) for 
                 rate in LOANS_DATA['Interest.Rate'] )
 
     # Remove the word 'months' from the loan term length
-    cleanTerms = pd.Series( float(term.rstrip(' months')) for 
+    cleanData['Loan.Length'] = pd.Series( float(term.rstrip(' months')) for 
                 term in LOANS_DATA['Loan.Length'] )
 
     # Pick lower limit of lendees FICO score as their FICO score
-    cleanScore = pd.Series( float(score.rpartition('-')[0]) for 
+    cleanData['FICO.Score'] = pd.Series( float(score.rpartition('-')[0]) for 
                 score in LOANS_DATA['FICO.Range'] )
 
-<<<<<<< HEAD
-    cleanData = pd.DataFrame(columns=['Interest.Rate', 'Loan.Length', 'FICO.Score'])
-=======
-    # Create a new dataframe with the filtered / cleaned data
-    #
-    cleanData = pd.DataFrame(columns=['Interest.Rate', 'Loan.Length', 'FICO.Score', 'Amount.Requested'])
->>>>>>> 4a2a36467cf283927e4f09db77bd964a06072e07
-
-    cleanData['Interest.Rate'] = cleanRates
-    cleanData['Loan.Length'] = cleanTerms
-    cleanData['FICO.Score'] = cleanScore
-<<<<<<< HEAD
-=======
+    # Amount requested is moved over as-is
     cleanData['Amount.Requested'] = LOANS_DATA['Amount.Requested']
->>>>>>> 4a2a36467cf283927e4f09db77bd964a06072e07
 
     return cleanData
 
@@ -64,6 +55,7 @@ def linReg(cleanData):
     # Create variables
     y = np.matrix(cleanData['Interest.Rate']).transpose()
 
+    # FICO Score and Loan Length are the most reliable predictors, loan amount is excluded
     x1 = np.matrix(cleanData['FICO.Score']).transpose()
     x2 = np.matrix(cleanData['Loan.Length']).transpose()
     
@@ -86,7 +78,7 @@ def kfCrossVal(loansData):
     # Import required libraries
     from sklearn.cross_validation import cross_val_predict
     from sklearn import linear_model
-    from sklearn.metrics import r2_score
+    import sklearn.metrics as met
     import matplotlib.pyplot as plt
     from sklearn.preprocessing import PolynomialFeatures
 
@@ -94,7 +86,6 @@ def kfCrossVal(loansData):
     # Interest Rate is the dependent variable
     lr = linear_model.LinearRegression()
     y = loansData.as_matrix(columns=['Interest.Rate'])
-    
     x = loansData[['Loan.Length', 'FICO.Score']].as_matrix()
 
     # Run the kfold cross validation and store the results as an array
@@ -103,10 +94,11 @@ def kfCrossVal(loansData):
     # Try and run as quadratic?
     # POLY2 = smf.ols(formula = 'Y ~ 1 + X + I(X**2)', data=TRAIN_DF).fit()
 
-    # Calculate R2
-    print("R Squared: {}".format(r2_score(y, predicted)))
+    # Calculate MAE, MSE, and R2
+    print("Mean Absolute Error: {}".format(met.mean_absolute_error(y, predicted)))
+    print("Mean Squared Error: {}".format(met.mean_squared_error(y, predicted)))
+    print("R Squared: {}".format(met.r2_score(y, predicted)))
 
-    '''
     # Plot the actual versus predicted values
     fix, ax = plt.subplots()
     ax.scatter(y, predicted)
@@ -114,7 +106,6 @@ def kfCrossVal(loansData):
     ax.set_xlabel('Measured')
     ax.set_ylabel('Predicted')
     plt.show()
-    '''
 
 #################################
 # SHOW REGRESSION MODEL SUMMARY #
