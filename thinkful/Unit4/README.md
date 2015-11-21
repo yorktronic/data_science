@@ -6,9 +6,9 @@ Perform a KFold cross validation of the linear regression model I built in Unit2
 
 ## Results ##
 
-`Mean Absolute Error: 0.0184240820785`
-`Mean Squared Error: 0.000542170328631`
-`R Squared: 0.68927852421`
+`Mean Absolute Error: 0.0184240820785` 
+`Mean Squared Error: 0.000542170328631` 
+`R Squared: 0.68927852421` 
 
 Plot of predicted interest rates versus actual interest rates:
 
