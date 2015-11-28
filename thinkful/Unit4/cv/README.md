@@ -12,7 +12,7 @@ Perform a KFold cross validation of the linear regression model I built in Unit2
 
 Plot of predicted interest rates versus actual interest rates:
 
-<img src="https://github.com/yorktronic/data_science/blob/master/thinkful/Unit4/cross_val_plot.png">
+<img src="./cross_val_plot.png">
 
 ## Summary ##
 
