@@ -1,4 +1,4 @@
-# Analysis of Samsung Accelerometer Data Using Decision Trees #
+# Modeling of Samsung Accelerometer Data Using Decision Trees #
 
 ## Objective ##
 Predict whether smartphone users are laying down, sitting, standing, or walking on a flat, uphill, or downhill surface using accelerometer data. See the <a href="https://github.com/yorktronic/data_science/blob/master/thinkful/Unit4/decision-trees/db/README.txt" target="_blank">README</a> provided by the dataset creators for more information.
