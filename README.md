@@ -16,6 +16,6 @@ My data science blog can be found <a href="http://yorktronic.io" target="_blank"
 
 4. <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit4/cv"> Cross validation of linear model that uses FICO Score and loan term length to predict interest rates offered by Lending club</a>
 
-5. <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit4/decision-trees">Predicting user body position based on accelerometer data using Decision Trees</a>
+5. <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit4/decision-trees">Predicting user body position based on accelerometer data using Decision Trees</a> (12.2.2015 - finalization of this analysis is pending)
 
-6. <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit4/k-nearest-neighbors">Predicting the class of iris flowers based on sepal length and width</a> (README and cross validation pending)
+6. <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit4/k-nearest-neighbors">Using k-nearest-neighbors to predict the class of iris flowers based on sepal length and width</a> (12.2.2015 - README and cross validation pending)
