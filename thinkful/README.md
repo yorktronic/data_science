@@ -1,8 +1,6 @@
 # Thinkful Data Science Course #
 
-Everything in this folder is related to my coursework as part of Thinkful's Data Science track. I've broken everything up by Unit to make it easier for me to keep track of, and I will only list units that I am working on or have completed.
-
-Some of the code contained herein was created by Thinkful's team as part of their tutorials in different areas. At some point I will go back and comment everything that is theirs, but for the time being this disclaimer is all you'll get.
+Everything in this folder is related to my coursework as part of Thinkful's Data Science track. I've broken everything up by Unit to make it easier for me to keep track of.
 
 ## Unit 1 - The Data Science Toolset ##
 * Python
@@ -22,13 +20,23 @@ Some of the code contained herein was created by Thinkful's team as part of thei
 ## Unit 3 - The projects ##
 * Analysis of how New Yorkers utilize the Citi Bike program in New York City
 * Weather analysis (almost complete)
-* Do wealthier countries provide better education? (everything from here down will be complete by September 1)
+* Do wealthier countries provide better education?
 
-## Unit 4 - Machine Learning (pending) ##
-* Machine Learning Algorithms
-* Spam filters, naive bayes, and wrangling
-* Extracting meaning from data
-* Recommendation engines
+## Unit 4 - Machine Learning ##
+* Classification v. Regression
+* Decision Trees
+* Naive Bayes
+* k-Nearest-Neighbors
+* Clustering (pending)
+* Support Vector Machines (pending)
+* Dimensionality Reduction (pending)
+* Evaluating Classifier Performance (pending)
 
 ## Unit 5 - Capstone ##
-TBD TBD TBD!!! I promise it will be cool
+<a href="https://github.com/yorktronic/hots-comp-calc">Heroes of the Storm (HOTS) team builder</a>
+
+HOTS is a multiplayer online battle arena video game made by Blizzard, the makers of Starcraft, Warcraft, World of Warcraft, Hearthstone, and the upcoming game Overwatch. In competetive play, there is a draft process before each game in which each 5-player team is built. Basically, there are 32 or so total characters to choose from; each player picks a character, and the same character can't be used more than once in a match.
+
+The purpose of the team builder is to use both player preferences, character data, and worldwide match history to predict which character should be selected by a team during each phase of the draft process. 
+
+It's not done yet, so go easy on me!

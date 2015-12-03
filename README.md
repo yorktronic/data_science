@@ -12,3 +12,10 @@ My data science blog can be found <a href="http://yorktronic.io" target="_blank"
 
 2. <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit3/weather">Weather analysis of major US cities</a>
 
+3. <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit2/time_series_analysis">Time series modeling of loan data from Lending Club</a>
+
+4. <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit4/cv"> Cross validation of linear model that uses FICO Score and loan term length to predict interest rates offered by Lending club</a>
+
+5. <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit4/decision-trees">Predicting user body position based on accelerometer data using Decision Trees</a>
+
+6. <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit4/k-nearest-neighbors">Predicting the class of iris flowers based on sepal length and width</a> (README and cross validation pending)
