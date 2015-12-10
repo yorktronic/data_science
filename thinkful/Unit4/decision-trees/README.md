@@ -9,13 +9,13 @@ Of the three models I built, the most accurate was the "black box" approach, ano
 ```python
 'accuracy': 0.8395437262357415
 'f1_score': 0.8273680293095115
- 'log_loss': 0.7209217738660755
- 'precision': 0.8499104420591913
- 'recall': 0.8331896228185193
+'log_loss': 0.7209217738660755
+'precision': 0.8499104420591913
+'recall': 0.8331896228185193
 ```
 The accuracy of my informed models were 60.18% and 53.14%, so the black box approach is a dramatic improvement. If I were to look more in to this, I might play around with the columns identified by the black box model as the most important indicators of whether someone is lying down, sitting, standing, etc, but for now I'll leave this be. The most important features / indicators are:
 
-| actual_name | index | count |
+| actual_name | index | importance_value |
 | ----------- | ----- | ----- |
 | tGravityAcc-min()-Z | X55 | 28 |
 | tGravityAcc-energy()-Z | X59 | 14 |
