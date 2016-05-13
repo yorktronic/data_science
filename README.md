@@ -6,11 +6,11 @@ Currently I'm enrolled in Thinkful's Data Science course, and you'll find my cou
 
 My data science blog can be found <a href="http://yorktronic.io" target="_blank">here.</a>
 
-## Selected Projects ##
+## Selected Projects / Techniques Used ##
 
-1. <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit3/nyc-biking">How New Yorkers bike using the CitiBike public bike program</a>
+1. <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit3/nyc-biking">How New Yorkers bike using the CitiBike public bike program</a>. Time series data, pandas, matplotlib, sqlite.
 
-2. <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit3/weather">Weather analysis of major US cities</a>
+2. <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit3/weather">Weather analysis of major US cities</a>. API calls, pandas, requests, sqlite, histograms, qq plots.
 
 3. <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit2/time_series_analysis">Time series modeling of loan data from Lending Club</a>
 

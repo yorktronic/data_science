@@ -29,13 +29,9 @@ Out[71]: 30` (August 13, 2015)
 `In [73]: temp_max
 Out[73]: ('phoenix', 109.65)`
 
-5. Plot a histogram of every city with temps rounded to nearest degree F
+5. Plot a histogram of every city with temps rounded to nearest degree F: <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit3/weather/plots/histograms">Histograms</a>
 
-<a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit3/weather/plots/histograms">./histograms/</a>
-
-6. Create a QQ plot of all cities against the normal distribution
-
-<a href="<a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit3/weather/plots/qq_plots">See this folder</a>">./qq_plots/</a>
+6. Create a QQ plot of all cities against the normal distribution: <a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit3/weather/plots/qq_plots">QQ Plots</a>
 
 7. What patterns were found in the data?
 
