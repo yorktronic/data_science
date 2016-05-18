@@ -15,7 +15,7 @@ loansData = pd.read_csv('./db/loansData_clean.csv')
 
 # Get the maximum interest rate from the user. Converts the interest rate to a devimal if the user provides an interest rate > 1.
 # 
-maxInterest = int(raw_input('What is the highest interest rate you can afford? '))
+maxInterest = float(raw_input('What is the highest interest rate you can afford? '))
 if maxInterest > 1:
 	maxInterest = maxInterest / 100.00
 
@@ -51,7 +51,7 @@ result = logit.fit()
 # Get the fitted coefficients from the results
 # 
 coeff = result.params
-print coeff
+#print coeff
 
 # This function will return p (the probability that you'll get a loan with an interest rate under 12% given your fico score and the loan amount you're requesting). We're going to access the coefficients produced by the logit.fit() above, which outputs a series where 0, 1, and 2 are the indicies for the coefficients of Loan.Amount, FICO.Score, and Intercept respectively
 #
