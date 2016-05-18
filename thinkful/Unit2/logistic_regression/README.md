@@ -1,5 +1,5 @@
 # Logistic Regression #
-<a href="https://github.com/yorktronic/data_science/tree/master/thinkful/Unit2/logistic_regression">logistic_regression.py</a> uses Lending Club data and a user-inputted FICO Score, interest rate, and loan amount to determine the probability of whether or not the user will get a loan. Keep in mind that this probability is based **solely** on the FICO score and loan amount requested - in the real world there are many other factors that contribute to one's loan-worthiness.
+<a href="https://github.com/yorktronic/data_science/blob/master/thinkful/Unit2/logistic_regression/logistic_regression.py">logistic_regression.py</a> uses Lending Club data and a user-inputted FICO Score, interest rate, and loan amount to determine the probability of whether or not the user will get a loan. Keep in mind that this probability is based **solely** on the FICO score and loan amount requested - in the real world there are many other factors that contribute to one's loan-worthiness.
 
 This is where I think things get particularly interesting. Logistic regression was developed by statistician D.R. Cox in 1958, and it's main purpose is to answer binary questions. If you really want to nerd out, you can read all about it on <a href="https://en.wikipedia.org/wiki/Logistic_regression">Wikipedia</a>.
 
