@@ -11,7 +11,7 @@ import numpy as np
 
 # Import the cleaned lending club data (original data can be found at https://spark-public.s3.amazonaws.com/dataanalysis/loansData.csv)
 # 
-loansData = pd.read_csv('../linear_regression_and_correlation/db/loansData_clean.csv')
+loansData = pd.read_csv('./db/loansData_clean.csv')
 
 # Get the maximum interest rate from the user. Converts the interest rate to a devimal if the user provides an interest rate > 1.
 # 
